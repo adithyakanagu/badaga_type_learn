@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="google-site-verification" content="SzwiiRtmWrpM0_nOCbW6ejP-dihTavBAlE2_lZhp4xI"/>
+  <title>Badaga / Badugu Script Typing & Learning</title>
+
+  <style>
+    @font-face {
+      font-family: 'KBaduga3';
+      src: url('KBaduga3.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0f172a;
+      --input-bg:#ffffff;
+      --input-border:#d0d4dd;
+      --key-bg:#ffffff;
+      --key-border:#8b9199;
+      --text:#000000;
+      --primary:#0b5fff;
+      --preview-bg:#ffffff;
+      --radius-lg:16px;
+      --radius-md:12px;
+      --radius-sm:8px;
+      --shadow-soft:0 10px 30px rgba(15,23,42,0.10);
+      --shadow-strong:0 18px 40px rgba(15,23,42,0.20);
+      --transition-fast:0.18s ease-out;
+      --transition-med:0.3s ease-out;
+    }
+    .dark-mode {
+      --bg:#020617;
+      --card:#111827;
+      --muted:#9ca3af;
+      --accent:#f9fafb;
+      --input-bg:#020617;
+      --input-border:#1f2937;
+      --key-bg:#020617;
+      --key-border:#374151;
+      --text:#f9fafb;
+      --primary:#3b82f6;
+      --preview-bg:#020617;
+      --shadow-soft:0 12px 32px rgba(15,23,42,0.75);
+      --shadow-strong:0 20px 45px rgba(15,23,42,0.9);
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      margin:0;
+      padding:12px;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      transition:background var(--transition-med),color var(--transition-med);
+      animation:fadeInBody 0.55s ease-out;
+    }
+
+    @keyframes fadeInBody{
+      from{opacity:0;transform:translateY(8px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:8px 4px 24px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    @media (min-width:640px){
+      header{gap:16px;margin-bottom:20px;}
+    }
+
+    h1{
+      margin:0;
+      font-size:1.25rem;
+      letter-spacing:0.02em;
+      color:var(--text);
+    }
+    @media (min-width:640px){
+      h1{font-size:1.45rem;}
+    }
+
+    p.lead{
+      margin:3px 0 0;
+      color:var(--muted);
+      font-size:0.7rem;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    /* logo image instead of KB letters */
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      padding:3px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 12px 32px rgba(15,23,42,0.35);
+      background:transparent;
+    }
+    .logo-img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:16px;
+      display:block;
+    }
+
+    .card{
+      background:var(--card);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      padding:14px;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-soft);
+      border:1px solid rgba(148,163,184,0.28);
+      margin-bottom:16px;
+      position:relative;
+      overflow:hidden;
+      transform:translateY(4px);
+      opacity:0;
+      animation:cardIn 0.5s ease-out forwards;
+      transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med);
+    }
+    .dark-mode .card{
+      border-color:rgba(55,65,81,0.9);
+    }
+
+    @keyframes cardIn{
+      to{transform:translateY(0);opacity:1;}
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at 0 0,rgba(59,130,246,0.18),transparent 60%);
+      opacity:0;
+      transform:translate3d(-30px,-18px,0);
+      transition:opacity var(--transition-med),transform var(--transition-med);
+      pointer-events:none;
+    }
+    .card:hover::before{
+      opacity:1;
+      transform:translate3d(0,0,0);
+    }
+
+    #landingScreen{
+      text-align:center;
+      max-width:960px;
+      margin:0 auto 18px auto;
+      padding:18px 14px 18px;
+    }
+    #landingScreen h2{
+      margin:0 0 10px;
+      font-size:1.15rem;
+    }
+    #landingScreen p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:0.85rem;
+    }
+
+    .landing-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (min-width:640px){
+      .landing-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:18px;
+      }
+    }
+
+    .landing-card{
+      cursor:pointer;
+      border-radius:var(--radius-md);
+      padding:12px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:var(--card);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      position:relative;
+      overflow:hidden;
+      transform:translateY(8px) scale(0.98);
+      opacity:0;
+      animation:landingIn 0.55s ease-out forwards;
+      transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-med);
+    }
+    .dark-mode .landing-card{
+      border-color:rgba(55,65,81,0.95);
+    }
+
+    @keyframes landingIn{
+      to{transform:translateY(0) scale(1);opacity:1;}
+    }
+
+    .landing-card:nth-child(1){animation-delay:0.02s;}
+    .landing-card:nth-child(2){animation-delay:0.12s;}
+    .landing-card img{
+      width:100%;
+      border-radius:var(--radius-md);
+      display:block;
+      object-fit:cover;
+      max-height:190px;
+      transition:transform var(--transition-med),box-shadow var(--transition-med),filter var(--transition-med);
+    }
+    .landing-card h3{
+      margin:2px 0 4px;
+      font-size:1rem;
+    }
+    .landing-card p{
+      margin:0;
+      font-size:0.8rem;
+      color:var(--muted);
+    }
+    .landing-card:hover img{
+      transform:scale(1.04) translateY(-1px);
+      box-shadow:0 12px 25px rgba(15,23,42,0.40);
+      filter:saturate(1.02);
+    }
+    .landing-pill{
+      position:absolute;
+      inset:auto 12px 12px auto;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:0.7rem;
+      background:rgba(15,23,42,0.85);
+      color:#f9fafb;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 10px 26px rgba(15,23,42,0.65);
+    }
+    .landing-pill span{
+      font-size:0.9rem;
+    }
+
+    #themeToggle{
+      position:fixed;
+      right:12px;
+      bottom:18px;
+      z-index:30;
+      padding:8px 12px;
+      border-radius:999px;
+      border:none;
+      background:radial-gradient(circle at 0 0,#facc15,#f97316);
+      color:#111827;
+      font-size:0.8rem;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+      box-shadow:0 16px 32px rgba(15,23,42,0.45);
+      transform:translateY(20px);
+      opacity:0;
+      animation:fabIn 0.5s 0.45s ease-out forwards;
+      transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),color var(--transition-fast);
+    }
+    @keyframes fabIn{
+      to{transform:translateY(0);opacity:1;}
+    }
+    #themeToggle-icon{
+      font-size:1.1rem;
+    }
+    #themeToggle:hover{
+      transform:translateY(-1px) scale(1.03);
+      box-shadow:0 20px 40px rgba(15,23,42,0.65);
+    }
+    .dark-mode #themeToggle{
+      background:radial-gradient(circle at 100% 0,#38bdf8,#6366f1);
+      color:#e5e7eb;
+    }
+
+    #appWrapper{
+      display:none;
+      animation:fadeInBody 0.45s.ease-out;
+    }
+
+    nav.main-nav{
+      display:flex;
+      gap:8px;
+      margin:4px 0 16px;
+      flex-wrap:wrap;
+    }
+    nav.main-nav button{
+      flex:1;
+      min-width:120px;
+      padding:9px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      background:var(--card);
+      color:var(--text);
+      cursor:pointer;
+      font-size:0.85rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      position:relative;
+      overflow:hidden;
+      transition:background var(--transition-fast),color var(--transition-fast),transform var(--transition-fast),border-color var(--transition-fast),box-shadow var(--transition-fast);
+    }
+    nav.main-nav button span.icon{
+      font-size:0.9rem;
+    }
+    nav.main-nav button::after{
+      content:'';
+      position:absolute;
+      left:14px;
+      right:14px;
+      bottom:5px;
+      height:2px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.9);
+      transform:scaleX(0);
+      transform-origin:center;
+      opacity:0;
+      transition:transform var(--transition-fast),opacity var(--transition-fast);
+    }
+    nav.main-nav button.active{
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      color:#f9fafb;
+      border-color:#1d4ed8;
+      box-shadow:0 12px 30px rgba(37,99,235,0.55);
+      transform:translateY(-1px);
+    }
+    nav.main-nav button.active::after{
+      transform:scaleX(1);
+      opacity:1;
+    }
+
+    .tab-content{
+      display:none;
+      opacity:0;
+      transform:translateY(6px);
+      transition:opacity 0.25s ease-out,transform 0.25s ease-out;
+    }
+    .tab-content.active{
+      display:block;
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .preview-label{
+      font-size:0.85rem;
+      margin-bottom:6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .preview-label small{
+      font-size:0.7rem;
+      color:var(--muted);
+    }
+
+    .preview{
+    min-height:180px;
+   max-height:40vh;        /* auto adjusts to screen */
+    border-radius:var(--radius-md);
+   padding:20px;
+   position:relative;
+   margin-bottom:14px;
+    background:var(--preview-bg);
+   border:1px solid var(--input-border);
+    cursor:text;
+
+  overflow-y:auto;        /* ✅ ENABLE SCROLL */
+  overflow-x:hidden;
+}
+
+    .preview .text{
+  font-family:'KBaduga3',system-ui,Segoe UI,sans-serif;
+  font-size:1.8rem;
+  line-height:1.6;
+  white-space:pre-wrap;
+  word-break:break-word;
+  color:var(--text);
+
+  position:relative;     /* ✅ NORMAL FLOW */
+}
+    .preview .text{
+        font-family:'KBaduga3',system-ui,Segoe UI,sans-serif;
+        font-size:1.8rem;
+        line-height:1.6;
+        white-space:pre-wrap;
+        word-break:break-word;
+        color:var(--text);
+
+       position:relative;     /* ✅ NORMAL FLOW */
+}
+
+    @media (min-width:640px){
+      .preview .text{font-size:2.15rem;}
+    }
+    @keyframes previewPop{
+      from{opacity:0;transform:scale(0.96) translateY(4px);}
+      to{opacity:1;transform:scale(1) translateY(0);}
+    }
+
+    .preview .cursor {
+      position:absolute;
+      /* hide the fake cursor visually; caret handled by the real textarea */
+      display:none !important;
+      width:3px;
+      height:32px;
+      background:linear-gradient(to bottom,var(--primary),rgba(11,95,255,0.4));
+      border-radius:2px;
+      animation:blink 1.2s infinite;
+      pointer-events:none;
+      z-index:10;
+      transition:left 0.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    @media (min-width:640px){
+      .preview .cursor{height:38px;}
+    }
+    @keyframes blink {
+      0%,50%{opacity:1;}
+      51%,100%{opacity:0;}
+    }
+
+    /* overlay textarea so we can use the real native caret in the preview */
+    .overlay-textarea{
+      position:absolute;
+      inset:0; /* fill the preview container */
+      width:100%;
+      height:100%;
+      margin:0;
+      padding:20px;
+      box-sizing:border-box;
+      border:0;
+      outline:0;
+      background:transparent;
+      resize:none;
+      color:transparent; /* hide typed text (we render it in previewText) */
+      caret-color:var(--primary); /* show native caret in accent color */
+      font-family:'KBaduga3', system-ui, 'Segoe UI', sans-serif;
+      font-size:1.8rem;
+      line-height:1.6;
+      white-space:pre-wrap;
+      overflow:auto;
+      z-index:20; /* above preview text */
+    }
+    @media (min-width:640px){
+      .overlay-textarea{font-size:2.15rem}
+    }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:4px;
+      margin-bottom:4px;
+    }
+    .btn{
+      border:0;
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      color:white;
+      cursor:pointer;
+      font-size:0.8rem;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 10px 26px rgba(37,99,235,0.55);
+      transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),opacity var(--transition-fast);
+      white-space:nowrap;
+    }
+    .btn span.icon{font-size:0.95rem;}
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 36px rgba(37,99,235,0.65);
+    }
+    .btn:active{
+      transform:translateY(0);
+      box-shadow:0 6px 16px rgba(37,99,235,0.7);
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--primary);
+      border:1px solid rgba(129,140,248,0.7);
+      box-shadow:none;
+    }
+    .dark-mode .btn.ghost{
+      color:#93c5fd;
+      border-color:#1d4ed8;
+    }
+
+    .kbd-wrap{margin-top:10px;}
+    .kbd-tabs{
+      display:flex;
+      gap:6px;
+      margin-bottom:10px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .kbd-tabs button{
+      padding:6px 11px;
+      border-radius:999px;
+      border:1px solid var(--key-border);
+      background:var(--key-bg);
+      cursor:pointer;
+      color:var(--text);
+      font-size:0.8rem;
+      white-space:nowrap;
+      transition:background var(--transition-fast),color var(--transition-fast),border-color var(--transition-fast),transform var(--transition-fast);
+    }
+    .kbd-tabs button.active{
+      background:linear-gradient(135deg,#2563eb,#4f46e5);
+      color:#f9fafb;
+      border-color:#1d4ed8;
+      transform:translateY(-1px);
+    }
+
+    .keyboard{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(48px,1fr));
+      gap:6px;
+    }
+
+    .key{
+      padding:9px 8px;
+      border:1px solid var(--key-border);
+      border-radius:12px;
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.95),rgba(226,232,240,0.9));
+      cursor:pointer;
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'KBaduga3',system-ui,sans-serif !important;
+      font-size:1.25rem;
+      color:var(--text);
+      position:relative;
+      box-shadow:0 6px 12px rgba(15,23,42,0.12);
+      transition:transform 0.12s ease-out,box-shadow 0.12s ease-out,background 0.12s ease-out,border-color 0.12s ease-out;
+    }
+    .dark-mode .key{
+      background:radial-gradient(circle at 0 0,#020617,#111827);
+      box-shadow:0 8px 18px rgba(0,0,0,0.65);
+    }
+    .key.wide{
+      grid-column:span 2;
+      min-height:46px;
+      font-size:0.8rem;
+      font-family:system-ui,sans-serif !important;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+    }
+    .key.operator{
+      background:linear-gradient(135deg,#4b5563,#111827);
+      border-color:#9ca3af;
+      color:white;
+    }
+    .key::after{
+      content:'';
+      position:absolute;
+      inset:auto 10px 6px;
+      height:3px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.12);
+      opacity:0;
+      transform:scaleX(0.8);
+      transition:opacity 0.12s ease-out,transform 0.12s ease-out;
+    }
+    .key:active{
+      transform:translateY(1px) scale(0.97);
+      box-shadow:0 3px 6px rgba(15,23,42,0.35);
+    }
+    .key:active::after{
+      opacity:1;
+      transform:scaleX(1);
+    }
+
+    .learn-section{
+      text-align:center;
+      padding:8px 4px 4px;
+    }
+    .learn-section h2{
+      margin:0 0 12px;
+      font-size:1.1rem;
+    }
+
+    nav.learn-nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:6px;
+      margin-bottom:14px;
+    }
+    nav.learn-nav button{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      background:rgba(255,255,255,0.92);
+      cursor:pointer;
+      color:var(--text);
+      font-size:0.78rem;
+      transition:background var(--transition-fast),color var(--transition-fast),transform var(--transition-fast),border-color var(--transition-fast),box-shadow var(--transition-fast);
+      white-space:nowrap;
+    }
+    .dark-mode nav.learn-nav button{
+      background:rgba(15,23,42,0.96);
+    }
+    nav.learn-nav button.active{
+      background:linear-gradient(135deg,#4f46e5,#6366f1);
+      color:#f9fafb;
+      border-color:#4f46e5;
+      transform:translateY(-1px);
+      box-shadow:0 10px 24px rgba(79,70,229,0.6);
+    }
+
+    .learn-grid{
+      display:none;
+      grid-template-columns:1fr;
+      gap:14px;
+      margin-top:8px;
+      opacity:0;
+      transform:translateY(8px);
+      transition:opacity 0.25s ease-out,transform 0.25s ease-out;
+    }
+    .learn-grid.active-grid{
+      display:grid;
+      opacity:1;
+      transform:translateY(0);
+    }
+    @media (min-width:700px){
+      .learn-grid{
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      }
+    }
+
+    .learn-card{
+      background:var(--input-bg);
+      border:1px solid var(--input-border);
+      border-radius:var(--radius-md);
+      padding:14px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      transition:transform var(--transition-med),box-shadow var(--transition-med),border-color var(--transition-med),background var(--transition-med);
+      color:var(--text);
+    }
+    .dark-mode .learn-card{
+      background:#020617;
+      border-color:#111827;
+    }
+    .learn-card h3{
+      margin:0 0 10px;
+      color:var(--accent);
+      font-size:0.95rem;
+    }
+    .dark-mode .learn-card h3{color:#e5e7eb;}
+    .learn-card p{
+      margin:6px 0 0;
+      font-size:0.78rem;
+      color:var(--muted);
+      line-height:1.4;
+    }
+    .learn-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-strong);
+      border-color:#c7d2fe;
+      background:linear-gradient(135deg,#ffffff,#f5f7ff);
+    }
+    .dark-mode .learn-card:hover{
+      background:radial-gradient(circle at 0 0,#020617,#020617 40%,#1e293b 100%);
+      border-color:#4f46e5;
+    }
+
+    .learn-image{
+      max-width:100%;
+      height:auto;
+      border-radius:10px;
+      margin-bottom:8px;
+      cursor:pointer;
+      display:block;
+      transition:transform 0.25s ease-out,box-shadow 0.25s ease-out,filter 0.25s ease-out;
+    }
+    .learn-card:hover .learn-image,
+    .learn-card:hover .video-thumb img{
+      transform:scale(1.04) translateY(-1px);
+      box-shadow:0 12px 27px rgba(15,23,42,0.45);
+      filter:saturate(1.05);
+    }
+
+    .video-thumb{
+      position:relative;
+      display:block;
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .video-thumb img{
+      width:100%;
+      display:block;
+      transition:transform 0.25s ease-out,box-shadow 0.25s ease-out,filter 0.25s ease-out;
+    }
+    .video-thumb span{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      background:rgba(15,23,42,0.7);
+      color:#fff;
+      padding:7px 14px;
+      border-radius:999px;
+      font-size:0.8rem;
+      box-shadow:0 10px 24px rgba(15,23,42,0.65);
+      backdrop-filter:blur(6px);
+    }
+
+    .img-modal{
+      display:none;
+      position:fixed;
+      z-index:9999;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.92);
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+    .img-modal img{
+      max-width:100%;
+      max-height:80vh;
+      border-radius:12px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.7);
+    }
+    .img-modal-close{
+      position:absolute;
+      top:14px;
+      right:20px;
+      font-size:26px;
+      color:#fff;
+      cursor:pointer;
+    }
+
+    video{
+      width:100%;
+      border-radius:12px;
+      outline:none;
+    }
+
+    small.helper{
+      font-size:0.72rem;
+      color:var(--muted);
+    }
+
+    .splash{
+      position:fixed;
+      inset:0;
+      z-index:9998;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:var(--bg);
+      color:var(--text);
+      animation:splashFadeIn 0.6s ease-out;
+    }
+    @keyframes splashFadeIn{
+      from{opacity:0;transform:scale(1.02);}
+      to{opacity:1;transform:scale(1);}
+    }
+    .splash-bg{
+      position:absolute;
+      inset:0;
+    }
+    .splash-bg img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:brightness(0.7);
+      transform:scale(1.05);
+      animation:splashZoom 12s ease-out forwards;
+    }
+    .dark-mode .splash-bg img{
+      filter:brightness(0.45);
+    }
+    @keyframes splashZoom{
+      from{transform:scale(1.05);}
+      to{transform:scale(1.12);}
+    }
+    .splash-overlay{
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at center,rgba(0,0,0,0.1),rgba(0,0,0,0.75));
+    }
+    .splash-content{
+      position:relative;
+      text-align:center;
+      padding:24px 18px;
+    }
+    .splash-content h1{
+      margin:0 0 20px;
+      font-size:1.5rem;
+      line-height:1.3;
+      text-shadow:0 3px 12px rgba(0,0,0,0.8);
+      color:#ffffff; /* white welcome text */
+    }
+    @media(min-width:640px){
+      .splash-content h1{font-size:2rem;}
+    }
+    .splash-enter-btn{
+      border:none;
+      padding:10px 26px;
+      border-radius:999px;
+      font-size:0.95rem;
+      font-weight:600;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      background:linear-gradient(135deg,#22c55e,#4ade80);
+      color:#022c22;
+      cursor:pointer;
+      box-shadow:0 14px 34px rgba(16,185,129,0.7);
+      transition:transform 0.18s ease-out,box-shadow 0.18s ease-out,background 0.18s ease-out;
+    }
+    .splash-enter-btn:hover{
+      transform:translateY(-2px) scale(1.03);
+      box-shadow:0 18px 40px rgba(16,185,129,0.85);
+    }
+    .splash-enter-btn:active{
+      transform:translateY(0) scale(0.98);
+      box-shadow:0 8px 18px rgba(16,185,129,0.9);
+    }
+    /* Founder section font */
+    @font-face {
+       font-family: 'FounderSerif';
+      src: local('Georgia');
+    }
+
+    .founder-section {
+      font-family: 'FounderSerif', Georgia, 'Times New Roman', serif;
+      line-height: 1.7;
+    font-size: 0.9rem;
+    text-align: left;
+    }
+
+    .founder-section h3 {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .founder-section p {
+      margin-bottom: 10px;
+    }
+
+    .founder-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- Splash screen -->
+<div class="splash" id="splashScreen">
+  <div class="splash-bg">
+    <img src="Alps-Switzerland.webp" alt="Badugu / Badaga welcome">
+  </div>
+  <div class="splash-overlay"></div>
+  <div class="splash-content">
+    <h1>WELCOME TO<br>BADUGU / BADAGA<br>LEARNING & TYPING WEB</h1>
+    <button class="splash-enter-btn" onclick="enterSite()">Enter</button>
+  </div>
+</div>
+
+<div class="container" id="mainContainer" style="display:none;">
+
+  <!-- Landing choice screen -->
+  <div id="landingScreen" class="card">
+    <h2>Select how you want to begin</h2>
+    <p>Select the Badugu / Badaga typing tool or explore the learning materials.</p>
+
+    <div class="landing-grid">
+      <div class="landing-card" onclick="openMode('typing')">
+        <img src="ft1.jpeg" alt="Badugu / Badaga Typing Tool">
+        <div class="landing-pill">
+          <span>⌨</span>
+          <span>Typing</span>
+        </div>
+        <h3>Open Typing Tool</h3>
+        <p>Type in Badugu / Badaga script using the on‑screen keyboard with smart preview.</p>
+      </div>
+
+      <div class="landing-card" onclick="openMode('learn')">
+        <img src="ft3.jpeg" alt="Learn Badugu Barego">
+        <div class="landing-pill">
+          <span>📘</span>
+          <span>Lessons</span>
+        </div>
+        <h3>Learn Badugu / Badaga</h3>
+        <p>Study Badugu script, poems, videos and textbooks in one place.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main app -->
+  <div id="appWrapper">
+
+    <header>
+      <div class="logo">
+        <img src="logo.jpeg" alt="Badaga / Badugu logo" class="logo-img">
+      </div>
+      <div>
+        <h1>Badaga / Badugu Script Typing & Learning</h1>
+        <p class="lead">CREATED BY ADITHYA KANAGU FOR BADUGU SCRIPT BY SIR YOGESH RAJ KADASOLEY.</p>
+      </div>
+    </header>
+
+    <nav class="main-nav">
+      <button class="main-tab active" data-tab="typing">
+        <span class="icon">⌨</span> <span>Typing Tool</span>
+      </button>
+      <button class="main-tab" data-tab="learn">
+        <span class="icon">📖</span> <span>Learn Badaga / Badugu</span>
+      </button>
+    </nav>
+
+    <!-- Typing Tool -->
+    <div id="typing" class="tab-content active">
+      <div class="card">
+        <div class="preview-label">
+          <strong>Preview (KBaduga3.ttf)</strong>
+          <small class="helper">Tap keys below to type or click preview to move cursor</small>
+        </div>
+        <div class="preview" id="preview">
+          <div class="text" id="previewText">$ल्लागु कैमुगिगॅ</div>
+          <div class="cursor" id="previewCursor"></div>
+          <textarea id="inputText" class="overlay-textarea" aria-label="Hidden input for typing"></textarea>
+        </div>
+
+        <div class="controls">
+          <button class="btn" id="copyPreview">
+            <span class="icon">📋</span><span>Copy</span>
+          </button>
+          <button class="btn ghost" id="downloadPng">
+            <span class="icon">🖼</span><span>Preview PNG</span>
+          </button>
+          <button class="btn ghost" id="downloadTxt">
+            <span class="icon">📝</span><span>Save .txt</span>
+          </button>
+          <button class="btn ghost" id="clearBtn">
+            <span class="icon">✖</span><span>Clear</span>
+          </button>
+        </div>
+
+        <div class="kbd-wrap">
+          <div class="kbd-tabs">
+            <button data-tab="vowels" class="active">Vowels</button>
+            <button data-tab="cons">Consonants</button>
+            <button data-tab="matras">Matras</button>
+            <button data-tab="akshara">Numbers</button>
+          </div>
+          <div id="keyboard" class="keyboard"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learn Badaga -->
+    <div id="learn" class="tab-content">
+      <div class="card">
+        <div class="learn-section">
+          <h2>Learn Badaga / Badugu Barego</h2>
+
+          <nav class="learn-nav">
+            <button class="learn-tab active" data-learn-tab="vowels">Vowels</button>
+            <button class="learn-tab" data-learn-tab="consonants">Consonants</button>
+            <button class="learn-tab" data-learn-tab="symbols">Symbols</button>
+            <button class="learn-tab" data-learn-tab="poems">Badugu Poems</button>
+            <button class="learn-tab" data-learn-tab="lessons">Lessons</button>
+            <button class="learn-tab" data-learn-tab="font">Badugu Font</button>
+            <button class="learn-tab" data-learn-tab="videos">Video Lessons</button>
+            <button class="learn-tab" data-learn-tab="founder">Founder of Badugu Bare</button>
+
+          </nav>
+
+          <!-- Vowels -->
+          <div id="vowels-learn" class="learn-grid active-grid">
+            <div class="learn-card">
+              <h3>Badaga Vowels – Scan</h3>
+              <img src="Screenshot 2025-12-25 180633.png"
+                   alt="Badaga vowels handwritten page"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+            </div>
+
+            <div class="learn-card">
+              <h3>Badaga Vowels – Writing Guide</h3>
+              <img src="bookvowels.jpeg"
+                   alt="How to start and write Badugu vowels"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+            </div>
+
+            <div class="learn-card">
+              <h3>Badugu Vowels – Video</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/ACzD-UhCj48?si=il3rKGa2ynUiIo5E"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/ACzD-UhCj48/hqdefault.jpg"
+                     alt="Badugu Vowels – Video thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+              <p>Tap the thumbnail to open the vowels lesson on YouTube.</p>
+            </div>
+          </div>
+
+          <!-- Consonants -->
+          <div id="consonants-learn" class="learn-grid">
+            <div class="learn-card">
+              <h3>Badaga Consonants – Chart</h3>
+              <img src="consonants.png"
+                   alt="Baduga consonants chart"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+            </div>
+
+            <div class="learn-card">
+              <h3>Badaga Consonants – Writing Guide</h3>
+              <img src="consonantsguide.jpeg"
+                   alt="How to start and write Badugu consonants"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 1</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/HEwUKKa6yfY?si=cm1-XHFm4PGzzJrS"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/HEwUKKa6yfY/hqdefault.jpg"
+                     alt="Consonants Video 1 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 2</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/yRQy50YKKlw?si=LN9CgQHe-Oqjosqc"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/yRQy50YKKlw/hqdefault.jpg"
+                     alt="Consonants Video 2 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 3</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/YuMz-_y4Afo?si=T0Bo5YX4jAUrOdmL"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/YuMz-_y4Afo/hqdefault.jpg"
+                     alt="Consonants Video 3 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 4</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/ld6RDXWH4hM?si=9rmP8WH4UTb0lryl"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/ld6RDXWH4hM/hqdefault.jpg"
+                     alt="Consonants Video 4 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 5</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/YVmuKFEliiI?si=c2CVkIRBf_dlHqGi"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/YVmuKFEliiI/hqdefault.jpg"
+                     alt="Consonants Video 5 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 6</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/cyDicma4KIg?si=-0v4EFcgHRVi4y1W"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/cyDicma4KIg/hqdefault.jpg"
+                     alt="Consonants Video 6 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 7</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/ctu6kDuBUfk?si=QL4PqdFmfLQJop5i"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/ctu6kDuBUfk/hqdefault.jpg"
+                     alt="Consonants Video 7 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+
+            <div class="learn-card">
+              <h3>Consonants Video 8</h3>
+              <a class="video-thumb"
+                 href="https://youtu.be/84GjXqijhF0?si=1tZ9gYob-h9i5uLY"
+                 target="_blank">
+                <img src="https://img.youtube.com/vi/84GjXqijhF0/hqdefault.jpg"
+                     alt="Consonants Video 8 thumbnail">
+                <span>▶ Play on YouTube</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Symbols -->
+          <div id="symbols-learn" class="learn-grid">
+            <div class="learn-card">
+              <h3>Vowel Marks & Symbols</h3>
+              <img src="badugu vowels with symbols.jpeg"
+                   alt="Badugu vowels with symbols chart"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+              <p>Tap the chart to view it larger.</p>
+            </div>
+
+            <div class="learn-card">
+              <h3>Signs of Vowels (Utcharippango)</h3>
+              <img src="bsyl.jpeg"
+                   alt="Signs or symbols of vowels to be added to consonants"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+              <p>Practice how each vowel sign attaches to consonants.</p>
+            </div>
+
+            <div class="learn-card">
+              <h3>Special Symbols Examples</h3>
+              <img src="spl.jpeg"
+                   alt="Consonants with special signs and symbols"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+              <p>Study symbols like SHRI, KALHATTY, BHRAMMA, HAN carefully.</p>
+            </div>
+
+            <div class="learn-card">
+              <h3>Badugu Symbols – PDF</h3>
+              <p>Download the full Badugu symbols reference as a PDF.</p>
+              <a href="badugusymbols.pdf"
+                 download
+                 class="btn">
+                ⬇ Symbols PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Badugu Poems -->
+          <div id="poems-learn" class="learn-grid">
+            <div class="learn-card">
+              <h3>Badugu Poem – Handwritten</h3>
+              <img src="bpoem1.jpeg"
+                   alt="Handwritten Badugu poem"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+              <p>Traditional Badugu poem written by hand.</p>
+            </div>
+
+            <div class="learn-card">
+              <h3>Badugu Poem – Digital</h3>
+              <img src="bpoem2.jpeg"
+                   alt="Digital Badugu poem poster"
+                   class="learn-image"
+                   onclick="openImgModal(this)">
+              <p>Modern digital poster of a Badugu poem.</p>
+            </div>
+          </div>
+
+          <!-- Lessons -->
+    <div id="lessons-learn" class="learn-grid">
+
+  <!-- PDF 1 -->
+  <a href="badugu-1st-level_compress.pdf"
+     target="_blank"
+     class="learn-card">
+    <h3>Badugu Barego – Level 1</h3>
+    <img src="bthumb1.jpeg"
+         alt="Badugu Barego Level 1 Textbook"
+         class="learn-image">
+    <p>Beginner level Badugu Barego textbook (PDF).</p>
+  </a>
+
+  <!-- PDF 2 -->
+  <a href="badugu-script_compress.pdf"
+     target="_blank"
+     class="learn-card">
+    <h3>Badugu Script Guide</h3>
+    <img src="bthumb2.jpeg"
+         alt="Badugu Script PDF"
+         class="learn-image">
+    <p>Complete Badugu script & writing reference (PDF).</p>
+  </a>
+
+  <!-- Existing video (kept) -->
+  <div class="learn-card">
+    <h3>Badugu Script – Video Lesson</h3>
+    <a class="video-thumb"
+       href="https://youtu.be/0wUXOTEH6ME?si=Ce_ZJDcgVaH1_hK7"
+       target="_blank">
+      <img src="https://img.youtube.com/vi/0wUXOTEH6ME/hqdefault.jpg"
+           alt="Badugu script video lesson thumbnail">
+      <span>▶ Play on YouTube</span>
+    </a>
+    <p>Introductory video lesson on Badugu script.</p>
+  </div>
+
+</div>
+
+
+          <!-- Font -->
+          <div id="font-learn" class="learn-grid">
+            <div class="learn-card">
+              <h3>Download Badugu Font</h3>
+              <p>Install the KBaduga3 font to type Badugu script in other apps.</p>
+              <a href="KBaduga3.ttf" download class="btn ghost">Download KBaduga3.ttf</a>
+            </div>
+          </div>
+
+          <!-- Videos -->
+          <div id="videos-learn" class="learn-grid">
+            <div class="learn-card">
+              <h3>Video Lessons</h3>
+              <p>Watch Badugu script lessons and playlists on Facebook.</p>
+              <a href="https://www.facebook.com/yogesh.raj.351" target="_blank" class="btn ghost">Open Facebook Playlist</a>
+            </div>
+            <!-- Founder -->
+            <div id="founder-learn" class="learn-grid">
+
+    <div class="learn-card founder-section">
+
+      <h3>Founder of Badugu Bare (Badugu Script)</h3>
+
+      <img src="yogesh-1a.webp" alt="Founder Mr. Yogesh R." class="learn-image" onclick="openImgModal(this)">
+
+      <p>
+        Badaga (Badugu) is an ancient language, the birth of it is unknown.
+        Extensive studies by eminent anthropologists and linguists have time
+        and again said that Badaga predates many of the established languages
+        of India. For the Badagas (Badugarul), it is <strong>"DHEVARU BAASHE"</strong>,
+        the language of the Gods.
+      </p>
+
+      <p>
+        It was the year 1968 when a young Badugu boy living with his maternal
+        grandmother, studying 8th standard at a government run school was
+        restlessly questioning himself as to why there was no script for his
+        mother tongue. In three years, he came out with a basic version of
+        the Badugu script and started distributing it to his classmates.
+      </p>
+
+      <p>
+        In 1978, he came out with a final refined structure of the script.
+        In 1991, he started teaching the script to twelve enthusiastic students
+        including one non-Badugu student. Between 1978 and 1991, he developed
+        the Badugu Grammar and a Badugu–Badugu–English dictionary.
+      </p>
+
+      <p>
+        Today, this gentleman, <strong>Mr. Yogesh R.</strong> of Kadasoley Village
+        in Thodhanadu Seeme, without any fanfare, continues teaching the script
+        to all interested people thereby inspiring generations of Badugaru.
+        The entire credit for developing the Badugu script goes to this son
+        of the soil.
+      </p>
+
+      <p>
+        Badaga Language Promotion Group (BLPG) is a voluntary organisation
+        founded on <strong>12-12-2012</strong>. Its vision is to regain the lost
+        glory of the Badugu language and promote cultural renaissance by
+        spreading usage of the Badugu script worldwide.
+      </p>
+
+      <p>
+        BLPG proudly presented the Badugu Script and 1st Level Text Book on
+        <strong>26-12-2012</strong> at Beragini Village with the blessings of
+        Hethal Amma.
+      </p>
+
+      <div class="founder-meta">
+        🌐 www.badagalanguage.org <br>
+        📘 facebook.com/groups/badagalanguage <br>
+        ✉ yogeshr23@rediffmail.com | ebhari@gmail.com | dhandapaniyk@gmail.com <br>
+        📞 +91-8838011021 / 8903471808 / 96555 95391 / 98841 27482
+      </div>
+
+      <p style="text-align:center;margin-top:12px;">
+        <strong>Long Live Badugu — the language of the Gods!</strong>
+      </p>
+
+    </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- end #appWrapper -->
+
+</div> <!-- end #mainContainer -->
+
+<button id="themeToggle">
+  <span id="themeToggle-icon">🌙</span>
+  <span>Theme</span>
+</button>
+
+<div id="imgModal" class="img-modal">
+  <span class="img-modal-close">&times;</span>
+  <img id="imgModalContent" src="" alt="">
+</div>
+
+<script>
+// Core UI functions
+function enterSite(){
+  const splash=document.getElementById('splashScreen');
+  const main=document.getElementById('mainContainer');
+  splash.style.opacity='0';
+  splash.style.transform='scale(1.02)';
+  setTimeout(()=>{
+    splash.style.display='none';
+    main.style.display='block';
+    window.scrollTo({top:0,behavior:'auto'});
+  },350);
+}
+
+function openMode(mode){
+  document.getElementById('landingScreen').style.display='none';
+  document.getElementById('appWrapper').style.display='block';
+  document.querySelectorAll('.main-tab').forEach(btn=>{
+    const active = btn.dataset.tab===mode;
+    btn.classList.toggle('active',active);
+    document.getElementById(btn.dataset.tab).classList.toggle('active',active);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(function(){
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme==="dark" || (!savedTheme && prefersDark)){
+    document.documentElement.classList.add('dark-mode');
+  }
+  updateThemeIcon();
+})();
+
+const themeToggle = document.getElementById('themeToggle');
+function updateThemeIcon(){
+  const icon = document.getElementById('themeToggle-icon');
+  const isDark = document.documentElement.classList.contains('dark-mode');
+  icon.textContent = isDark ? '☀️' : '🌙';
+}
+themeToggle.onclick = ()=>{
+  document.documentElement.classList.toggle('dark-mode');
+  localStorage.setItem('theme', document.documentElement.classList.contains('dark-mode') ? 'dark':'light');
+  updateThemeIcon();
+};
+
+document.querySelectorAll('.learn-tab').forEach(btn=>{
+  btn.onclick=()=>{
+    if(btn.classList.contains('active')) return;
+    document.querySelectorAll('.learn-tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.learn-grid').forEach(c=>{
+      c.classList.remove('active-grid');
+      c.style.display='none';
+    });
+    btn.classList.add('active');
+    const target = document.getElementById(btn.dataset.learnTab + '-learn');
+    if(target){
+      // show the target grid
+      target.style.display='grid';
+      requestAnimationFrame(()=>target.classList.add('active-grid'));
+
+      // ensure any ancestor .learn-grid elements are also visible
+      let p = target.parentElement;
+      while(p){
+        if(p.classList && p.classList.contains('learn-grid')){
+          p.style.display = 'block';
+          p.classList.add('active-grid');
+        }
+        p = p.parentElement;
+      }
+    }
+  };
+});
+
+// Typing preview and caret handling
+const ta = document.getElementById("inputText");
+const previewText = document.getElementById("previewText");
+const previewCursor = document.getElementById("previewCursor");
+const previewContainer = document.getElementById("preview");
+
+let cursorPosition = 0;
+const DEFAULT_PREVIEW = "$ल्लागु कैमुगिगॅ";
+
+function updatePreview() {
+  previewText.textContent = ta.value || DEFAULT_PREVIEW;
+  // keep preview scrolled to bottom and sync textarea scroll
+  previewContainer.scrollTop = previewContainer.scrollHeight;
+  try{ ta.scrollTop = ta.scrollHeight; }catch(e){}
+}
+
+// custom cursor positioning removed — native textarea caret is used now
+
+ta.addEventListener("input", ()=>{ updatePreview(); /* ensure caret visible after layout */ setTimeout(()=>{ try{ ta.scrollTop = ta.scrollHeight; previewContainer.scrollTop = previewContainer.scrollHeight; }catch(e){} },20); });
+document.addEventListener('selectionchange', ()=>{});
+ta.addEventListener('click', ()=>{});
+ta.addEventListener('keyup', ()=>{});
+ta.addEventListener('mouseup', ()=>{});
+ta.addEventListener('scroll', ()=>{ previewContainer.scrollTop = ta.scrollTop; });
+
+// Controls: copy, download, clear
+document.getElementById('clearBtn').onclick = ()=>{ ta.value = ''; ta.dispatchEvent(new Event('input')); };
+document.getElementById('copyPreview').onclick=async()=>{
+  try { await navigator.clipboard.writeText(previewText.textContent); alert('Copied preview!'); }
+  catch(e){ alert('Copy failed. Please copy manually.'); }
+};
+document.getElementById('downloadTxt').onclick = ()=>{
+  const blob = new Blob([previewText.textContent],{type:'text/plain'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='typed-badaga.txt'; a.click();
+};
+
+document.getElementById('downloadPng').onclick = async () => {
+  const preview = document.getElementById('preview');
+  const textDiv = document.getElementById('previewText');
+  const originalStyles = { height: preview.style.height, maxHeight: preview.style.maxHeight, overflow: preview.style.overflow };
+  preview.style.height = textDiv.scrollHeight + "px";
+  preview.style.maxHeight = "none";
+  preview.style.overflow = "visible";
+  await new Promise(resolve => setTimeout(resolve, 50));
+  const canvas = await html2canvas(preview, { backgroundColor: null, scale: 2 });
+  const link = document.createElement('a'); link.download = 'preview.png'; link.href = canvas.toDataURL('image/png'); link.click();
+  preview.style.height = originalStyles.height; preview.style.maxHeight = originalStyles.maxHeight; preview.style.overflow = originalStyles.overflow;
+};
+
+// Keyboard data and rendering
+const VOWELS=['अ','आ','इ','ई','उ','ऊ','$','ए','ऐ','ओ','%','औ'];
+const CONSONANTS=['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','ृ'];
+const MATRAS=['ा','=','ी','ु','ू','ॅ','े','ै','ँ','ो','ौ','^','ः','्','+','`'];
+const AKSHARA_QUICK=['1','2','3','4','5','6','7','8','9','0'];
+
+const keyboard = document.getElementById('keyboard');
+document.querySelectorAll('.kbd-tabs button').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.kbd-tabs button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderTab(btn.dataset.tab); }; });
+
+function renderTab(tab) {
+  keyboard.innerHTML = '';
+  let list = (tab==='vowels') ? VOWELS : (tab==='cons') ? CONSONANTS : (tab==='matras') ? MATRAS : AKSHARA_QUICK;
+  list.forEach(ch=>{ let b=document.createElement('div'); b.className='key'; b.textContent=ch; b.onclick=()=>insertChar(ch); keyboard.appendChild(b); });
+  createOp('Space', 'space'); createOp('Enter', 'enter'); createOp('⌫', 'back'); createOp('Clear', 'clear');
+}
+
+function createOp(name, action) { let b=document.createElement('div'); b.className='key wide operator'; b.textContent=name; b.onclick=()=>{ if(action==='space') insertChar(' '); else if(action==='enter') insertChar('\n'); else if(action==='back') backspace(); else if(action==='clear'){ ta.value = ''; ta.dispatchEvent(new Event('input')); } }; keyboard.appendChild(b); }
+
+function insertChar(ch) { const s=ta.selectionStart,e=ta.selectionEnd; ta.value=ta.value.slice(0,s)+ch+ta.value.slice(e); ta.selectionStart=ta.selectionEnd=s+ch.length; ta.dispatchEvent(new Event('input')); }
+
+function backspace() { const s=ta.selectionStart,e=ta.selectionEnd; if(s!==e){ ta.value=ta.value.slice(0,s)+ta.value.slice(e); ta.selectionStart=ta.selectionEnd=s; } else if(s>0){ let chars=ta.value.split(''); chars.splice(s-1,1); ta.value=chars.join(''); ta.selectionStart=ta.selectionEnd=s-1; } ta.dispatchEvent(new Event('input')); }
+
+// Image modal
+const imgModal = document.getElementById('imgModal');
+const imgModalContent = document.getElementById('imgModalContent');
+const imgModalClose = document.querySelector('.img-modal-close');
+function openImgModal(imgEl) { imgModalContent.src = imgEl.src; imgModalContent.alt = imgEl.alt; imgModal.style.display = 'flex'; }
+imgModalClose.onclick = ()=> imgModal.style.display = 'none';
+imgModal.onclick = e=> { if(e.target === imgModal) imgModal.style.display = 'none'; };
+
+ta.value = '';
+updatePreview();
+renderTab('vowels');
+
+// MAIN TAB SWITCHING (Typing ↔ Learn)
+document.querySelectorAll('.main-tab').forEach(btn=>{ btn.addEventListener('click', ()=>{ if(btn.classList.contains('active')) return; document.querySelectorAll('.main-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(tab=>tab.classList.remove('active')); const target = document.getElementById(btn.dataset.tab); if(target){ target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); } }); });
+
+</script>
+
+
+</body>
+</html> 
