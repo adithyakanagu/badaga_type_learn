@@ -1,0 +1,20 @@
+{
+  "name": "Badaga / Badugu Typing & Learning",
+  "short_name": "Badaga",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b5fff",
+  "icons": [
+    {
+      "src": "logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
